@@ -76,7 +76,7 @@ WHERE dea.continent IS NOT NULL
 ORDER BY 2,3;
 
 --Creating new column of cumulative vaccinations per country (recreating total_vaccinations)
-SELECT dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations, SUM(CONVERT(INT,vac.new_vaccinations)) OVER (PARTITION BY dea.location ORDER BY dea.location, dea.date) AS CumulativeVaccinations
+SELECT dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations, SUM(CONVERT(BIGINT,vac.new_vaccinations)) OVER (PARTITION BY dea.location ORDER BY dea.location, dea.date) AS CumulativeVaccinations
 FROM CovidPortfolioProject..coviddeaths dea
 JOIN CovidPortfolioProject..covidvaccinations vac
 	ON dea.location = vac.location AND dea.date = vac.date
@@ -86,7 +86,7 @@ ORDER BY 2,3;
 --CTE to calculate percentage of Population is vaccinated per country over time
 WITH PopvsVac (Continent, Location, Date, Population, new_vaccinations, CumulativeVaccinations)
 AS (
-SELECT dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations, SUM(CONVERT(INT,vac.new_vaccinations)) OVER (PARTITION BY dea.location ORDER BY dea.location, dea.date) AS CumulativeVaccinations
+SELECT dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations, SUM(CONVERT(BIGINT,vac.new_vaccinations)) OVER (PARTITION BY dea.location ORDER BY dea.location, dea.date) AS CumulativeVaccinations
 FROM CovidPortfolioProject..coviddeaths dea
 JOIN CovidPortfolioProject..covidvaccinations vac
 	ON dea.location = vac.location AND dea.date = vac.date
@@ -109,7 +109,7 @@ CumulativeVaccinations numeric
 )
 
 INSERT INTO #PercentPopulationVaccinated
-SELECT dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations, SUM(CONVERT(INT,vac.new_vaccinations)) OVER (PARTITION BY dea.location ORDER BY dea.location, dea.date) AS CumulativeVaccinations
+SELECT dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations, SUM(CONVERT(BIGINT,vac.new_vaccinations)) OVER (PARTITION BY dea.location ORDER BY dea.location, dea.date) AS CumulativeVaccinations
 FROM CovidPortfolioProject..coviddeaths dea
 JOIN CovidPortfolioProject..covidvaccinations vac
 	ON dea.location = vac.location AND dea.date = vac.date
@@ -121,7 +121,7 @@ FROM #PercentPopulationVaccinated;
 
 --Creating View to store data for future visualitzations
 CREATE VIEW PercentPopulationVaccinated AS 
-SELECT dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations, SUM(CONVERT(INT,vac.new_vaccinations)) OVER (PARTITION BY dea.location ORDER BY dea.location, dea.date) AS CumulativeVaccinations
+SELECT dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations, SUM(CONVERT(BIGINT,vac.new_vaccinations)) OVER (PARTITION BY dea.location ORDER BY dea.location, dea.date) AS CumulativeVaccinations
 FROM CovidPortfolioProject..coviddeaths dea
 JOIN CovidPortfolioProject..covidvaccinations vac
 	ON dea.location = vac.location AND dea.date = vac.date
