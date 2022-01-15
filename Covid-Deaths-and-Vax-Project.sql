@@ -1,9 +1,16 @@
+/*
+
+DE on ourworldindata's COVID-19 deaths dataset
+Skills: Join, CTE, Temp Table, Aggregate Functions, Windows Functions, Views, Data Type Conversion
+
+*/
+
 SELECT *
 FROM CovidPortfolioProject..coviddeaths
 WHERE continent IS NOT NULL
 ORDER BY 3,4;
 
---Data to be used
+--Select data to be used
 SELECT Location, date, total_cases, new_cases, total_deaths, population
 FROM CovidPortfolioProject..coviddeaths
 WHERE continent IS NOT NULL
