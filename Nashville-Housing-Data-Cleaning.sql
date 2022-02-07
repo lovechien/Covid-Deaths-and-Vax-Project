@@ -2,7 +2,7 @@
 
 Data Cleaning using SQL Queries
 
-Skills used in this project: Joins, Substrings, Parsename, Partitions, etc.
+Skills used in this project: Joins, Substrings, Parsename, Partitions, CTEs, etc.
 
 */
 
